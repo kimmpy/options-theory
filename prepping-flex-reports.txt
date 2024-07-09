@@ -1,0 +1,32 @@
+1. go into the directory that has all the flex reports and type in terminal:
+	grep -e "      2.*" -e "      2.*" (file name) > tmpfile && mv (file name)
+this clears the headers in the file
+
+
+
+
+2. paste the header into the top of the file (copy and paste EXACT line with exact spacing)
+   SYMBOL   P/C   EXPIRATION   STRIKE-PRICE   MARK-PRICE   OPEN-INTEREST  
+
+
+
+
+3. to combine all of the txt files into one dataframe, type all this after typing python3 in terminal:
+
+import pandas as pd
+import glob
+
+# Get a list of all TXT files in a directory
+txt_files = glob.glob('/home/kim/data/flex-reports/4-april/*.txt')
+
+# Create an empty dataframe to store the combined data
+combined_df = pd.DataFrame()
+
+# Loop through each CSV file and append its contents to the combined dataframe
+for txt_file in txt_files:
+    df = pd.read_fwf(txt_file)
+    combined_df = pd.concat([combined_df, df])
+
+# Print the combined dataframe
+print(combined_df)
+
