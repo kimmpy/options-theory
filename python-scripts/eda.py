@@ -8,3 +8,8 @@ def data_analysis (file, message, x, y):
     plt.title(message)
     plt.show()
 
+file = input('Enter file name: ')
+message = ''
+x = input('Enter x: ')
+y = input('Enter y: ')
+data_analysis(file, message, x, y)
