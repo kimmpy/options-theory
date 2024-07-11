@@ -13,5 +13,4 @@ message = ''
 x = input('Enter x: ')
 y = input('Enter y: ')
 rows = int(input("How many rows do you want to show? "))
-
 data_analysis(file, message, x, y)
