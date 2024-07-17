@@ -1,1 +1,1 @@
-# data
+The goal of our project is to create and train a predictive model that can predict the prices and implied volatility of European vanilla flex options. So far we have extracted and formatted data of these option contracts into dataframes, estimated the implied volatility of each option contract using Newton's method, and created volatility surfaces for these contracts.
