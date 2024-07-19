@@ -3,13 +3,14 @@ import matplotlib.pyplot as plt
 import numpy as np 
 
 
-def surface(file):
+def surface(file, date):
     df = pd.read_csv(file)
-    
+    df = df.loc[df['EXPIRATION'] == date]
+    print(df)
     # Extract data
     x = df['TIME-TO-EXPIRATION'].values
-    y = df['IV'].values
-    z = df['STRIKE-PRICE'].values
+    y = df['STRIKE-PRICE'].values
+    z = df['IV'].values
 
     # Ensure x, y, z have the same length
     assert len(x) == len(y) == len(z), "x, y, z arrays must have the same length"
@@ -34,8 +35,8 @@ def surface(file):
     ax.plot_surface(X, Y, Z, cmap='viridis')
 
     ax.set_xlabel('TIME-TO-EXPIRATION')
-    ax.set_ylabel('IV')
-    ax.set_zlabel('STRIKE-PRICE')
+    ax.set_ylabel('STRIKE-PRICE')
+    ax.set_zlabel('IV')
     
     plot_title = input('What is the plot title? ')
     
@@ -43,4 +44,5 @@ def surface(file):
     plt.show()
 
 file = input("What file would you like to use? ")
-surface(file)
+date = input('Enter exp date: ')
+surface(file, date)
