@@ -1,3 +1,4 @@
+#-- Uses py_vollib to calculate implied volatility --#
 from py_vollib.black_scholes import black_scholes
 from py_vollib.black_scholes.implied_volatility import implied_volatility
 import pandas as pd
@@ -5,6 +6,7 @@ import pandas as pd
 df = pd.read_csv('../merged-flex-index/RUT_merged.csv')
 implied_vols = []
 
+# Iterates through each row and calculates implied volatility then appending to list
 for index, row in df.iterrows():
     flag = row['P/C'].lower()
     S = row['ADJ CLOSE']
@@ -14,7 +16,7 @@ for index, row in df.iterrows():
     price = row['MARK-PRICE']
 
     try:
-        # Calculate implied volatility using py_lets_be_rational
+        # Calculate implied volatility
         implied_vol = implied_volatility(price, S, K, T, r, flag)
     except Exception as e:
         # Handle exception (e.g., print error message, log, set implied volatility to NaN)
