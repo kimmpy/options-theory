@@ -24,7 +24,7 @@ def vega(S, K, T, r, sigma):
     return vega
 
 #-- Implied volatility using Newton's method --#
-def iv(row, tol=1e-6, max_iterations=500):
+def iv(row, tol=1e-6, max_iterations=100):
     flag = row['P/C']
     S = row['ADJ CLOSE']
     K = row['STRIKE-PRICE']
@@ -35,7 +35,7 @@ def iv(row, tol=1e-6, max_iterations=500):
     # Initial sigma guess based on historical volatility
     sigma = 0.1569
     min_sigma = 1e-4
-    max_sigma = 2.0
+    max_sigma = 10.0
 
     # Newton's method with max iterations to find sigma
     for i in range(0, max_iterations):
@@ -57,4 +57,4 @@ df = pd.read_csv(file)
 
 df['IV'] = df.apply(iv, axis=1)
 
-df.to_csv('GSPC_test.csv')
+df.to_csv('tmp3.csv')
