@@ -19,12 +19,13 @@ def vega(S, K, T, r, sigma):
     d1 = (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
     vega = S * norm.pdf(d1) * np.sqrt(T)
 
-    if vega==0:
+    if vega == 0:
         vega = 0.1
+    
     return vega
 
 #-- Implied volatility using Newton's method --#
-def iv(row, tol=1e-6, max_iterations=100):
+def iv(row):
     flag = row['P/C']
     S = row['ADJ CLOSE']
     K = row['STRIKE-PRICE']
@@ -33,23 +34,26 @@ def iv(row, tol=1e-6, max_iterations=100):
     market_price = row['MARK-PRICE']
 
     # Initial sigma guess based on historical volatility
-    sigma = 0.1569
+    sigma = 0.1511*5
     min_sigma = 1e-4
-    max_sigma = 10.0
+    max_sigma = 2.5
+    price_diff = 0.05
 
     # Newton's method with max iterations to find sigma
-    for i in range(0, max_iterations):
+    while price_diff > 1e-6:
         price = bs(S, K, T, r, sigma, flag)
         vega_val = vega(S, K, T, r, sigma)
         price_diff = price - market_price
-
-        if abs(price_diff) < tol:
-            return sigma
         
         sigma_update = sigma - price_diff / vega_val
+        
         # Ensure sigma stays within bounds
         sigma = max(min_sigma, min(max_sigma, sigma_update))
+
+        if sigma==0.0001:
+            return 0.0
         
+    print(row.name)
     return sigma
 
 file = input('Enter file path: ')
@@ -57,4 +61,4 @@ df = pd.read_csv(file)
 
 df['IV'] = df.apply(iv, axis=1)
 
-df.to_csv('tmp3.csv')
+df.to_csv('test.csv')
