@@ -42,6 +42,7 @@ do
   grep -e "      2.*" -e "      4.*" "$file" > tmpfile
   mv tmpfile "$file"
   echo "   SYMBOL   P/C   EXPIRATION   STRIKE-PRICE   MARK-PRICE   OPEN-INTEREST" > tmpfile
+  cat "$file" >> tmpfile
   mv tmpfile "$file"
 done
 ```
