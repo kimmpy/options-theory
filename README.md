@@ -45,18 +45,30 @@ do
   mv tmpfile "$file"
 done
 ```
-* In order to add the 'DATE' and 'TIME-TO-EXPIRATION' columns and also convert the 'EXPIRATION' column into DateTime, run this command
+* In order to add the 'DATE' and 'TIME-TO-EXPIRATION' columns, convert the 'EXPIRATION' column into DateTime, and also convert 'STRIKE-PRICE' to float, run the prepare_flex.py script
 ```
-for file in flxopint.*.txt; do python add_dates.py "$file"; done
+for file in flxopint.*.txt; do python ../../python-scripts/prepare_flex.py "$file"; done
 ```
 * Move all of the new csv files into the 'csv' directory
 ```
 mv *.csv ../csv
 ```
 ### Merging Flex and Index
-*
-*
-
+* Download all of the index reports and then move them to the index-data directory
+* Before you merge the flex and index files, you first need to merge all of the csv files into one DataFrame
+* Direct yourself outside of the 'txt' directory then run the combine_dfs.py script
+* The merged csv file will be output with the name of the directory as the file name
+```
+python ../../python-scripts/combine_dfs.py .
+```
+* Change directory into the merged-flex-index directory then run the merge_flex_index.py script
+* This will filter through the rows in the combined DataFrame that matches the stock market symbol then it will merge it with the stock market's index report
+* This will also rename all index columns into uppercase to match flex reports
+* For this example, I will be using RUT
+```
+cd ../../merged-flex-index/
+python ../python-scripts/merge_flex_index.py ../flex-reports/2024-03/2024-03.csv ../index-data/RUT.csv RUT
+```
 ## Overview of Folders
 * *flex-reports* - Flex reports organized by months. Inside of each folder for each month, there are separate folders containing txt files and their equivalent in csv format. The files outside of these folders are combined DataFrames for each month including one csv file with all three months.
 * *index-data* - File for each stock market which contains data about the underlying stock.
