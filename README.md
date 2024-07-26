@@ -23,6 +23,40 @@ mkdir {folder name}
 ```
 git clone git@github.com:kimmpy/options-theory.git
 ```
+### Preparing Flex Reports
+* Download all necessary flex reports and place them within the flex-reports folder and then organize them by months
+* Create a two new directories for 'csv' files and 'txt' files
+* For this example, the month of March will be used
+```
+cd flex-reports
+mkdir 2024-03
+cd 2024-03
+mkdir csv txt
+```
+* Direct yourself into the 'txt' directory then run this command
+* This clears all of the unnecessary headers in the files and then adds the correct headers
+```
+cd txt
+for file in *
+do
+  grep -e "      2.*" -e "      4.*" "$file" > tmpfile
+  mv tmpfile "$file"
+  echo "   SYMBOL   P/C   EXPIRATION   STRIKE-PRICE   MARK-PRICE   OPEN-INTEREST" > tmpfile
+  mv tmpfile "$file"
+done
+```
+* In order to add the 'DATE' and 'TIME-TO-EXPIRATION' columns and also convert the 'EXPIRATION' column into DateTime, run this command
+```
+for file in flxopint.*.txt; do python add_dates.py "$file"; done
+```
+* Move all of the new csv files into the 'csv' directory
+```
+mv *.csv ../csv
+```
+### Merging Flex and Index
+*
+*
+
 ## Overview of Folders
 * *flex-reports* - Flex reports organized by months. Inside of each folder for each month, there are separate folders containing txt files and their equivalent in csv format. The files outside of these folders are combined DataFrames for each month including one csv file with all three months.
 * *index-data* - File for each stock market which contains data about the underlying stock.
