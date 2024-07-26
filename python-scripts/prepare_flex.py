@@ -22,6 +22,8 @@ def prepare_flex(file):
     df['DATE'] = date
 
     # Changing expiration column from string to datetime
+    df = df[df['EXPIRATION']!='***']
+    df = df[df['EXPIRATION']!='***  G']
     df['EXPIRATION'] = pd.to_datetime(df['EXPIRATION'], format='%m %d %Y')
     df['EXPIRATION'] = df['EXPIRATION'].dt.strftime('%Y-%m-%d')
 
