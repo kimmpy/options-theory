@@ -16,7 +16,7 @@ pip install py_vollib
 ### Create Folder for Repo
 * Create a folder where you would like to store the repository
 ```
-mkdir {folder name}
+mkdir options-theory
 ```
 ### Clone Repo into Folder
 * Run this command to clone the repository into your desired folder using SSH
