@@ -1,4 +1,4 @@
-   SYMBOL   P/C   EXPIRATION   STRIKE-PRICE   MARK-PRICE   OPEN-INTEREST   
+   SYMBOL   P/C   EXPIRATION   STRIKE-PRICE   MARK-PRICE   OPEN-INTEREST
       2DJX     C   06 21 2024  00381 070      8.9427      3957                                                                                  
       2DJX     P   06 21 2024  00381 070      1.1229      3957                                                                                  
       2DJX     C   06 21 2024  00382 140      8.0572      2356                                                                                  
