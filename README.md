@@ -48,7 +48,7 @@ done
 ```
 * In order to add the 'DATE' and 'TIME-TO-EXPIRATION' columns, convert the 'EXPIRATION' column into DateTime, and also convert 'STRIKE-PRICE' to float, run the prepare_flex.py script
 ```
-for file in flxopint.*.txt; do python ../../python-scripts/prepare_flex.py "$file"; done
+for file in flxopint.*.txt; do python ../../../python-scripts/prepare_flex.py "$file"; done
 ```
 * Move all of the new csv files into the 'csv' directory
 ```
@@ -62,13 +62,22 @@ mv *.csv ../csv
 ```
 python ../../python-scripts/combine_dfs.py .
 ```
-* Change directory into the merged-flex-index directory then run the merge_flex_index.py script
-* This will filter through the rows in the combined DataFrame that matches the stock market symbol then it will merge it with the stock market's index report
+* Run this script to filter through the rows in the combined DataFrame that matches the stock market symbol then it will merge it with the stock market's index report
 * This will also rename all index columns into uppercase to match flex reports
+* Finally, move the file to the merged-flex-index directory into the corresponding directory
 * For this example, I will be using RUT
 ```
-cd ../../merged-flex-index/
-python ../python-scripts/merge_flex_index.py ../flex-reports/2024-03/2024-03.csv ../index-data/RUT.csv RUT
+mkdir ../../merged-flex-index/2024-03 # if you haven't made a corresponding directory for the month in merged-flex-index
+python ../../python-scripts/merge_flex_index.py 2024-03.csv ../../index-data/RUT.csv RUT
+mv RUT.csv ../../index-data/2024-03
+```
+* OPTIONAL:
+* If you decide to merge multiple flex reports and index reports months, this step will teach you how to merge it into a single DataFrame for easier handling with calculating implied volatility later on
+* CAUTION: this will merge ALL files matching the index report symbol into a singular DataFrame
+* For this example, I will be using 2024-03 and 2024-04 and I will be merging all of the RUT.csv's
+```
+cd ../../merged-flex-index
+python ../python-scripts/concat_flex_index.py . RUT
 ```
 ## Overview of Folders
 * *flex-reports* - Flex reports organized by months. Inside of each folder for each month, there are separate folders containing txt files and their equivalent in csv format. The files outside of these folders are combined DataFrames for each month including one csv file with all three months.
