@@ -79,6 +79,11 @@ mv RUT.csv ../../index-data/2024-03
 cd ../../merged-flex-index
 python ../python-scripts/concat_flex_index.py . RUT
 ```
+### Calculating Implied Volatility
+* Run this script on the merged flex-index csv file to produce a new csv file with an added column for the implied volatility
+```
+python ../python-scripts/iv_manual.py RUT_concat.csv RUT
+```
 ## Overview of Folders
 * *flex-reports* - Flex reports organized by months. Inside of each folder for each month, there are separate folders containing txt files and their equivalent in csv format. The files outside of these folders are combined DataFrames for each month including one csv file with all three months.
 * *index-data* - File for each stock market which contains data about the underlying stock.
