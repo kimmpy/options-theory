@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 from scipy.stats import norm
+import os
+import sys
 
 #-- Black-Scholes formula to find price --#
 def bs(S, K, T, r, sigma, flag):
@@ -27,16 +29,16 @@ def vega(S, K, T, r, sigma):
 #-- Implied volatility using Newton's method --#
 def iv(row):
     flag = row['P/C']
-    S = row['ADJ CLOSE']
+    S = row['ADJ-CLOSE']
     K = row['STRIKE-PRICE']
     T = row['TIME-TO-EXPIRATION']/365.0
     r = 0.0
     market_price = row['MARK-PRICE']
 
     # Initial sigma guess based on historical volatility
-    sigma = 0.1511*5
+    sigma = 5
     min_sigma = 1e-4
-    max_sigma = 2.5
+    max_sigma = 5
     price_diff = 0.05
 
     # Newton's method with max iterations to find sigma
@@ -56,9 +58,21 @@ def iv(row):
     print(row.name)
     return sigma
 
-file = input('Enter file path: ')
-df = pd.read_csv(file)
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print('Usage: python iv_manual.py <root_path> <symbol>')
+        sys.exit(1)
+    
+    path = sys.argv[1]
+    symbol = sys.argv[2]
+    df = pd.read_csv(path)
+    df['IV'] = df.apply(iv, axis=1)
 
-df['IV'] = df.apply(iv, axis=1)
+    # Get absolute path, output file name based on directory name
+    abs_path = os.path.abspath(path)
+    dir_name = os.path.basename(abs_path)
+    symbol = dir_name[:len(symbol)]
+    
+    output_name = os.path.join(os.path.dirname(path), f'{symbol}_iv.csv')
 
-df.to_csv('test.csv')
+    df.to_csv(output_name, index=False)
