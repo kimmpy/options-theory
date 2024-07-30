@@ -84,6 +84,12 @@ python ../python-scripts/concat_flex_index.py . RUT
 ```
 python ../python-scripts/iv_manual.py RUT_concat.csv RUT
 ```
+### Plotting Strike Price vs. Implied Volatility
+* To plot a scatter graph with Strike Price as the x-axis and Implied Volatility as the y-axis, run this script
+* This script takes <root_path> <title> <expiration> <time-to-expiration> <flag>
+```
+python ../python-scripts/plot_strike_iv.py RUT_iv.csv StrikevIV 2024-06-21 30 P
+```
 ## Overview of Folders
 * *flex-reports* - Flex reports organized by months. Inside of each folder for each month, there are separate folders containing txt files and their equivalent in csv format. The files outside of these folders are combined DataFrames for each month including one csv file with all three months.
 * *index-data* - File for each stock market which contains data about the underlying stock.
