@@ -1,2 +1,4 @@
 merged-flex-index/RUT_concat.csv filter=lfs diff=lfs merge=lfs -text
 merged-flex-index/SPX_concat.csv filter=lfs diff=lfs merge=lfs -text
+merged-flex-index/RUT_iv.csv filter=lfs diff=lfs merge=lfs -text
+merged-flex-index/SPX_iv.csv filter=lfs diff=lfs merge=lfs -text
