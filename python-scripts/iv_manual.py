@@ -76,3 +76,4 @@ if __name__ == '__main__':
     output_name = os.path.join(os.path.dirname(path), f'{symbol}_iv.csv')
 
     df.to_csv(output_name, index=False)
+    print(f'File saved to {output_name}')

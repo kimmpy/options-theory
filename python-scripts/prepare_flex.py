@@ -41,8 +41,15 @@ def prepare_flex(file):
     df = df[['SYMBOL', 'P/C', 'DATE', 'EXPIRATION', 'TIME-TO-EXPIRATION', 'STRIKE-PRICE', 'MARK-PRICE', 'OPEN-INTEREST']]
     output_file = file.replace('.txt', '.csv')
     df.to_csv(output_file, index=False)
+    
+    print(f'File saved to {output_file}')
 
 
 if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print('Usage: python prepare_flex.py <file_path>')
+        sys.exit(1)
+    
     file=sys.argv[1]
     prepare_flex(file)
+    

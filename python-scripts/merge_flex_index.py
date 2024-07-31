@@ -10,6 +10,7 @@ def merge(flex_path, index_path, symbol):
     pattern = f"(?=.*{symbol})(?=.*[24])"
     filtered_flex_df = flex_df[flex_df['SYMBOL'].str.contains(pattern, na=False)]
 
+    # Rename all index columns into uppercase
     index_df = index_df.rename(columns=
                 {index_df.columns[0]: 'DATE', index_df.columns[1]: 'OPEN', 
                 index_df.columns[2]: 'HIGH', index_df.columns[3]: 'LOW', index_df.columns[4]: 'CLOSE', 
@@ -18,9 +19,9 @@ def merge(flex_path, index_path, symbol):
     # Merges the filtered_flex_df and index_df based on date
     merged_df = filtered_flex_df.merge(index_df, how='inner', on='DATE')
 
-    # Rename all index columns into uppercase
-
-    merged_df.to_csv(symbol + '.csv', index=False)
+    output = symbol + '.csv'
+    merged_df.to_csv(output, index=False)
+    print(f'File saved to {output}')
 
 if __name__ == '__main__':
     if len(sys.argv) != 4:

@@ -21,9 +21,11 @@ def combine_dfs(path):
     dir_name = os.path.basename(abs_path)
     output_name = os.path.join(os.path.dirname(path), f'{dir_name}.csv')
 
+    # Sorts then filters out rows that have a time to expiration of 0
     combined_df = combined_df.sort_values(by=['DATE', 'EXPIRATION', 'TIME-TO-EXPIRATION'])
     combined_df = combined_df[combined_df['TIME-TO-EXPIRATION']!=0]
     combined_df.to_csv(output_name, index=False)
+    print(f'File saved to {output_name}')
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:

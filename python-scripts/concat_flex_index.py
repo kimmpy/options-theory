@@ -29,7 +29,7 @@ def concat_flex_index(base_dir, symbol):
     output_file = os.path.join(base_dir, symbol + '_concat.csv')
     merged_df.to_csv(output_file, index=False)
 
-    print(f"Files concatenated successfully! Output saved to {output_file}")
+    print(f"Output saved to {output_file}")
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:

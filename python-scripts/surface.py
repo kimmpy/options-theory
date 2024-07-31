@@ -2,14 +2,16 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np 
+import sys
 
 
-def surface(file, flag, date):
+def surface(file, expiration, flag):
     df = pd.read_csv(file)
 
     # Filters rows based on expiration and flag
-    df = df.loc[df['EXPIRATION'] == date]
-    df = df.loc[df['P/C'] == flag]
+    df = df[df['EXPIRATION'] == expiration]
+    df = df[df['P/C'] == flag]
+    df = df[df['IV']!=0]
 
     # Extract data
     x = df['TIME-TO-EXPIRATION'].values
@@ -46,8 +48,15 @@ def surface(file, flag, date):
     
     plt.savefig(plot_title + '.png')
     plt.show()
+    print(f'Graph plotted successfully!')
 
-file = input("What file would you like to use? ")
-flag = input('P/C: ')
-date = input('Enter exp date: ')
-surface(file, flag, date)
+if __name__ == '__main__':
+    if len(sys.argv) != 4:
+        print('Usage: python surface.py <root_path> <expiration> <P/C>')
+        sys.exit(1)
+    
+    path = sys.argv[1]
+    expiration = sys.argv[2]
+    flag = sys.argv[3]
+    
+    surface(path, expiration, flag)
